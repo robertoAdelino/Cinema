@@ -30,12 +30,10 @@ public class DbTableFilmes implements BaseColumns {
         ContentValues values = new ContentValues();
 
         values.put(_ID, filmes.getId());
+
         values.put(FIELD_NAME, filmes.getName());
-        /*
-        *
-        DATA
-        *
-        */
+
+        values.put(FIELD_DATE, filmes.getDate().toString());
 
         values.put(FIELD_CLASSIFICATION, filmes.getClassificacao());
 
