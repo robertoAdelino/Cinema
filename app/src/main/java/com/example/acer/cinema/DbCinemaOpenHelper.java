@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbCinemaOpenHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "cinema.db";
+    public static final String DATABASE_NAME = "cinema.db";
     private static final int DATABASE_VERSION = 1;
 
 
