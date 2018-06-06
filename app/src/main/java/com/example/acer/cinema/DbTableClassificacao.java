@@ -38,5 +38,8 @@ public class DbTableClassificacao implements BaseColumns {
     }
 
 
+    public int update(ContentValues values, String whereClause, String[] whereArgs) {
+        return db.update(TABLE_NAME, values, whereClause, whereArgs);
+    }
 
 }
