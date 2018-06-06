@@ -1,6 +1,7 @@
 package com.example.acer.cinema;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -31,6 +32,11 @@ public class DbTableClassificacao implements BaseColumns {
 
         return values;
     }
+
+    public long insert(ContentValues values) {
+        return db.insert(TABLE_NAME, null, values);
+    }
+
 
 
 }
