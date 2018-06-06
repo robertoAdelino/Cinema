@@ -1,6 +1,7 @@
 package com.example.acer.cinema;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -52,5 +53,10 @@ public class DbTableFilmes implements BaseColumns {
     public int delete(String whereClause, String[] whereArgs) {
                 return db.delete(TABLE_NAME, whereClause, whereArgs);
            }
+
+    public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+               return db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
+           }
+
 
 }
