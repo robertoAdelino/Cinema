@@ -43,4 +43,14 @@ public class DbTableFilmes implements BaseColumns {
     public long insert(ContentValues values) {
         return db.insert(TABLE_NAME, null, values);
     }
+
+
+    public int update(ContentValues values, String whereClause, String[] whereArgs) {
+              return db.update(TABLE_NAME, values, whereClause, whereArgs);
+           }
+
+    public int delete(String whereClause, String[] whereArgs) {
+                return db.delete(TABLE_NAME, whereClause, whereArgs);
+           }
+
 }

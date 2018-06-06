@@ -27,7 +27,7 @@ public class DbTableClassificacao implements BaseColumns {
         ContentValues values = new ContentValues();
 
         values.put(_ID, classificacao.getId());
-        values.put(FIELD_TYPE, classificacao.getName());
+        values.put(FIELD_TYPE, classificacao.getType());
 
         return values;
     }
