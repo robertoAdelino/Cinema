@@ -1,5 +1,7 @@
 package com.example.acer.cinema;
 
+import android.database.Cursor;
+
 public class Classificacao {
     private int id;
     private String type;
@@ -20,4 +22,8 @@ public class Classificacao {
     public void setType(String type) {
         this.type = type;
     }
+
+
+
+
 }

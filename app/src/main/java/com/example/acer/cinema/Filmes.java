@@ -4,25 +4,23 @@ import java.util.Date;
 
 public class Filmes {
     private int id;
-    private int classificacao;
+    private String classificacao;
     private String name;
-    private Date date;
+    private String date;
 
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-
-    public int getClassificacao() {
+    public String getClassificacao() {
         return classificacao;
     }
 
-    public void setClassificacao(int classificacao) {
+    public void setClassificacao(String classificacao) {
         this.classificacao = classificacao;
     }
 

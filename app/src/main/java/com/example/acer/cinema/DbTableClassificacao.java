@@ -8,6 +8,9 @@ import android.provider.BaseColumns;
 public class DbTableClassificacao implements BaseColumns {
     public static final String TABLE_NAME = "classificacao";
     private static final String FIELD_TYPE = "tipo";
+    public static final String [] ALL_COLUMNS = new String[] {
+            _ID, FIELD_TYPE
+    };
 
     private SQLiteDatabase db;
 
@@ -32,6 +35,22 @@ public class DbTableClassificacao implements BaseColumns {
 
         return values;
     }
+
+
+    public static Classificacao getCurrentClassificacaoFromCursor(Cursor cursor) {
+        final int posId = cursor.getColumnIndex(_ID);
+        final int posType = cursor.getColumnIndex(FIELD_TYPE);
+
+
+        Classificacao classificacao = new Classificacao();
+
+        classificacao.setId(cursor.getInt(posId));
+        classificacao.setType(cursor.getString(posType));
+
+        return classificacao;
+    }
+
+
 
     public long insert(ContentValues values) {
         return db.insert(TABLE_NAME, null, values);
