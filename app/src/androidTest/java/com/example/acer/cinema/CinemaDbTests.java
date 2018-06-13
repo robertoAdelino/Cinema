@@ -53,6 +53,9 @@ public class CinemaDbTests {
 
         Filmes filmes = new Filmes();
         filmes.setName("Avatar");
+        filmes.setClassificacao("Bom");
+        filmes.setDate("11-11-11");
+        filmes.setId(1);
 
         // Insert/create (C)RUD
         long id = insertFilmes(tableFilmes, filmes);
