@@ -8,7 +8,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonVerFilmes;
-
+    private Button buttonVerTodos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +19,13 @@ public class MainActivity extends AppCompatActivity {
         buttonVerFilmes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verFilmesVistos();
+                Intent intent = new Intent(MainActivity.this, ShowVistos.class );
+                startActivity(intent);
             }
         });
 
 
-    }
 
-    public void verFilmesVistos(){
-        Intent intent = new Intent(this, ShowVistosActivity.class);
-        startActivity(intent);
     }
 
 
