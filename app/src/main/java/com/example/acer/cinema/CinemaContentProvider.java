@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -41,8 +42,7 @@ public class CinemaContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-
+        public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder){
         SQLiteDatabase db = cinemaOpenHelper.getReadableDatabase();
 
                         String id = uri.getLastPathSegment();
@@ -78,8 +78,38 @@ public class CinemaContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        SQLiteDatabase db = cinemaOpenHelper.getWritableDatabase();
+
+        UriMatcher matcher = getCinemaUriMatcher();
+        long id = -1;
+
+
+        switch (matcher.match(uri)) {
+                        case FILMES:
+                                id = new DbTableFilmes(db).insert(values);
+                                break;
+                        case CLASSIFICACAO:
+                                id = new DbTableClassificacao(db).insert(values);
+                                break;
+
+                        default:
+                                throw new UnsupportedOperationException("Invalid URI: " + uri);
+                        }
+
+                if (id > 0) {
+                        notifyChanges(uri);
+                        return Uri.withAppendedPath(uri, Long.toString(id));
+                    } else {
+                        throw new SQLException("Could not insert record");
+                    }
+           }
+
+            private void notifyChanges(@NonNull Uri uri) {
+                getContext().getContentResolver().notifyChange(uri, null);
+
+
+
     }
 
     @Override
