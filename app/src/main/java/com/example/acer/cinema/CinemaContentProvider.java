@@ -9,23 +9,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import java.text.BreakIterator;
 
 public class CinemaContentProvider extends ContentProvider {
-
+    private static final String AUTHORITY = "com.example.cinema";
     private static final int FILMES = 100;
     private static final int FILMES_ID = 101;
     private static final int CLASSIFICACAO = 200;
     private static final int CLASSIFICACAO_ID = 201;
+    private static final String MULTIPLE_ITEMS = "vnd.android.cursor.dir";
+    private static final String SINGLE_ITEM = "vnd.android.cursor.item";
 
 
     private static UriMatcher getCinemaUriMatcher() {
                 UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-                        uriMatcher.addURI("com.example.acer.cinema", "filmes", FILMES);
-                uriMatcher.addURI("com.example.acer.cinema", "filmes/#", FILMES_ID);
+                        uriMatcher.addURI("AUTHORITY", "filmes", FILMES);
+                uriMatcher.addURI("AUTHORITY", "filmes/#", FILMES_ID);
 
-                        uriMatcher.addURI("com.example.acer.cinema", "classificacao", CLASSIFICACAO);
-                uriMatcher.addURI("com.example.acer.cinema", "classificacao/#", CLASSIFICACAO_ID);
+                        uriMatcher.addURI("AUTHORITY", "classificacao", CLASSIFICACAO);
+                uriMatcher.addURI("AUTHORITY", "classificacao/#", CLASSIFICACAO_ID);
 
                         return uriMatcher;
             }
@@ -73,10 +76,28 @@ public class CinemaContentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
-    }
+        UriMatcher matcher = getCinemaUriMatcher();
 
+        switch (matcher.match(uri)) {
+            case FILMES:
+                return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + DbTableFilmes.TABLE_NAME;
+
+            case CLASSIFICACAO:
+                return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + DbTableClassificacao.TABLE_NAME;
+
+            case FILMES_ID:
+                return SINGLE_ITEM + "/" + AUTHORITY + "/" + DbTableFilmes.TABLE_NAME;
+
+            case CLASSIFICACAO_ID:
+                return SINGLE_ITEM + "/" + AUTHORITY + "/" + DbTableClassificacao.TABLE_NAME;
+
+            default:
+                throw new UnsupportedOperationException("Unknown URI: " + uri);
+
+        }
+    }
     @Nullable
+
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         SQLiteDatabase db = cinemaOpenHelper.getWritableDatabase();
@@ -136,7 +157,7 @@ public class CinemaContentProvider extends ContentProvider {
                         }
 
                         if (rows > 0) notifyChanges(uri);
-        
+
                         return rows;
     }
 
