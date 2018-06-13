@@ -118,7 +118,31 @@ public class CinemaContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+
+        SQLiteDatabase db = cinemaOpenHelper.getWritableDatabase();
+
+        UriMatcher matcher = getCinemaUriMatcher();
+
+        String id = uri.getLastPathSegment();
+
+        int rows = 0;
+
+        switch (matcher.match(uri)) {
+            case FILMES_ID:
+                rows = new DbTableFilmes(db).update(values, DbTableFilmes._ID + "=?", new String[]{id});
+                break;
+            case CLASSIFICACAO_ID:
+                rows = new DbTableClassificacao(db).update(values, DbTableClassificacao._ID + "=?", new String[]{id});
+                break;
+
+            default:
+                throw new UnsupportedOperationException("Invalid URI: " + uri);
+        }
+
+        if (rows > 0) notifyChanges(uri);
+
+        return rows;
+
     }
 }
