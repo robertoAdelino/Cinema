@@ -25,6 +25,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        buttonVerTodos = (Button) findViewById(R.id.buttonVerTodos);
+        buttonVerTodos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ShowTodos.class );
+                startActivity(intent);
+            }
+        });
+
 
     }
 
