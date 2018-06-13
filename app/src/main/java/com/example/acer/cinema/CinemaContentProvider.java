@@ -8,8 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class CinemaContentProvider extends ContentProvider {
+
+    DbCinemaOpenHelper cinemaOpenHelper;
+
     @Override
     public boolean onCreate() {
+        cinemaOpenHelper = new DbCinemaOpenHelper(getContext());
         return false;
     }
 
