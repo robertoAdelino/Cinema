@@ -12,7 +12,14 @@ import android.support.annotation.Nullable;
 import java.text.BreakIterator;
 
 public class CinemaContentProvider extends ContentProvider {
+
     private static final String AUTHORITY = "com.example.cinema";
+
+
+    public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
+    public static final Uri BOOKS_URI = Uri.withAppendedPath(BASE_URI, DbTableFilmes.TABLE_NAME);
+
+
     private static final int FILMES = 100;
     private static final int FILMES_ID = 101;
     private static final int CLASSIFICACAO = 200;
