@@ -45,7 +45,7 @@ public class DbTableFilmes implements BaseColumns {
         return values;
     }
 
-    public static Filmes getCurrentBookFromCursor(Cursor cursor) {
+    public static Filmes getCurrentFilmeFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
         final int posTitle = cursor.getColumnIndex(FIELD_TITLE);
         final int posPoints = cursor.getColumnIndex(FIELD_POINTS);
