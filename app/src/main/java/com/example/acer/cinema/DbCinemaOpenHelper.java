@@ -46,15 +46,15 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
     private void seed(SQLiteDatabase db) {
         DbTableClassificacao dbTableClassificacao = new DbTableClassificacao(db);
 
-        Classificacao classificacao = new Classificacao();
+        Categorias classificacao = new Categorias();
         classificacao.setType("Bom");
         int idClassifcacaoBom = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
 
-        classificacao = new Classificacao();
+        classificacao = new Categorias();
         classificacao.setType("Muito Bom");
         int idClassificacaoMuitoBom = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
 
-        classificacao = new Classificacao();
+        classificacao = new Categorias();
         classificacao.setType("Mau");
         int idClassificacaoMau = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
 

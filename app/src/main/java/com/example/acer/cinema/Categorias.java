@@ -2,10 +2,9 @@ package com.example.acer.cinema;
 
 import android.database.Cursor;
 
-public class Classificacao {
+public class Categorias {
     private int id;
-    private String type;
-
+    private String name;
 
     public int getId() {
         return id;
@@ -15,15 +14,11 @@ public class Classificacao {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
-
-
-
-
 }

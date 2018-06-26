@@ -27,7 +27,7 @@ public class DbTableClassificacao implements BaseColumns {
         );
     }
 
-    public static ContentValues getContentValues(Classificacao classificacao) {
+    public static ContentValues getContentValues(Categorias classificacao) {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_TYPE, classificacao.getType());
@@ -36,12 +36,12 @@ public class DbTableClassificacao implements BaseColumns {
     }
 
 
-    public static Classificacao getCurrentClassificacaoFromCursor(Cursor cursor) {
+    public static Categorias getCurrentClassificacaoFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
         final int posType = cursor.getColumnIndex(FIELD_TYPE);
 
 
-        Classificacao classificacao = new Classificacao();
+        Categorias classificacao = new Categorias();
 
         classificacao.setId(cursor.getInt(posId));
         classificacao.setType(cursor.getString(posType));

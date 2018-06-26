@@ -111,7 +111,7 @@ public class CinemaDbTests {
         DbTableClassificacao tableClassificacao = new DbTableClassificacao(db);
 
         // Insert/create (C)RUD
-        Classificacao classificacao = new Classificacao();
+        Categorias classificacao = new Categorias();
 
         classificacao.setType("Bom");
         classificacao.setId((int) idFilmes);
@@ -154,10 +154,10 @@ public class CinemaDbTests {
 
 
 
-    private Classificacao ReadFirstClassificacao(DbTableClassificacao tableClassificacao,
-                                                 String expectedType,
-                                                 long expectedFilmesId,
-                                                 long expectedId) {
+    private Categorias ReadFirstClassificacao(DbTableClassificacao tableClassificacao,
+                                              String expectedType,
+                                              long expectedFilmesId,
+                                              long expectedId) {
 
         Cursor cursor = tableClassificacao.query(DbTableClassificacao.ALL_COLUMNS, null,
                 null, null, null, null);
@@ -165,7 +165,7 @@ public class CinemaDbTests {
 
         assertTrue("Failed to read the first classificacao", cursor.moveToNext());
 
-        Classificacao classificacao = DbTableClassificacao.getCurrentClassificacaoFromCursor(cursor);
+        Categorias classificacao = DbTableClassificacao.getCurrentClassificacaoFromCursor(cursor);
 
         assertEquals("Incorrect classificacao name", expectedType, classificacao.getType());
         assertEquals("Incorrect classificacao id", expectedId, classificacao.getId(), 0.001);
