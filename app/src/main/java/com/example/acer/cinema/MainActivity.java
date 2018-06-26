@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity  {
       //  filmes = DbTableFilmes.getCurrentFilmesFromCursor(cursorFilmes);
 
        // editTextRealizador.setText(filmes.get());
-        editTextNomeFilme.setText(filmes.getName());
-        editTextData.setText(String.format("%.2f",filmes.getDate()));
+        editTextNomeFilme.setText(filmes.getTitle());
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

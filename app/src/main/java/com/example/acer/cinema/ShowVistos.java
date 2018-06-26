@@ -32,7 +32,7 @@ public class ShowVistos extends AppCompatActivity implements LoaderManager.Loade
     }
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         if (id == CINEMA_CURSOR_LOADER_ID) {
-            return new CursorLoader(this, CinemaContentProvider.CINEMA_URI,
+            return new CursorLoader(this, CinemaContentProvider.FILMES_URI,
                     DbTableFilmes.ALL_COLUMNS, null, null, null);
         }
 

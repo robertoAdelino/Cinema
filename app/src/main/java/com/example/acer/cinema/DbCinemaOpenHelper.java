@@ -45,7 +45,7 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
         DbTableCategories dbTableCategories = new DbTableCategories(db);
 
         Categorias category = new Categorias();
-        category.setName("Sci Fi");
+        category.setName("SciFi");
         int idCategorySciFi = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
         category = new Categorias();
@@ -60,14 +60,14 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
 
         Filmes filme = new Filmes();
-        filme.setTitle("Mr Bean");
-        filme.setIdCategory(idCategoryComedy);
+        filme.setTitle("Interstelar");
+        filme.setIdCategory(idCategorySciFi);
         filme.setPoints(15);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
         filme = new Filmes();
-        filme.setTitle("Interstellar");
-        filme.setIdCategory(idCategorySciFi);
+        filme.setTitle("Mr Bean");
+        filme.setIdCategory(idCategoryComedy);
         filme.setPoints(18);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
