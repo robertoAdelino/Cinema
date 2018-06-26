@@ -5,12 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbCinemaOpenHelper extends SQLiteOpenHelper {
-
     private static final boolean PRODUCTION = false;
 
     public static final String DATABASE_NAME = "cinema.db";
     private static final int DATABASE_VERSION = 1;
-
 
     /**
      * Create a helper object to create, open, and/or manage a database.
@@ -32,8 +30,8 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        DbTableCategories dbTableClassificacao = new DbTableCategories(db);
-        dbTableClassificacao.create();
+        DbTableCategories dbTableCategories = new DbTableCategories(db);
+        dbTableCategories.create();
 
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
         dbTableFilmes.create();
@@ -44,39 +42,40 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
     }
 
     private void seed(SQLiteDatabase db) {
-        DbTableCategories dbTableClassificacao = new DbTableCategories(db);
+        DbTableCategories dbTableCategories = new DbTableCategories(db);
 
-        Categorias classificacao = new Categorias();
-        classificacao.setType("Bom");
-        int idClassifcacaoBom = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
+        Categorias category = new Categorias();
+        category.setName("Sci Fi");
+        int idCategorySciFi = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
-        classificacao = new Categorias();
-        classificacao.setType("Muito Bom");
-        int idClassificacaoMuitoBom = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
+        category = new Categorias();
+        category.setName("Drama");
+        int idCategoryDrama = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
-        classificacao = new Categorias();
-        classificacao.setType("Mau");
-        int idClassificacaoMau = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
+        category = new Categorias();
+        category.setName("Comedy");
+        dbTableCategories.insert(DbTableCategories.getContentValues(category));
+        int idCategoryComedy = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
 
-        Filmes filmes = new Filmes();
-        filmes.setDate("11-05-2015");
-        filmes.setId(idClassifcacaoBom);
-        filmes.setName("Star Wars");
-        dbTableFilmes.insert(DbTableFilmes.getContentValues(filmes));
+        Filmes filme = new Filmes();
+        filme.setTitle("Mr Bean");
+        filme.setIdCategory(idCategoryComedy);
+        filme.setPoints(15);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
-        filmes = new Filmes();
-        filmes.setDate("11-06-2016");
-        filmes.setId(idClassificacaoMuitoBom);
-        filmes.setName("Avatar");
-        dbTableFilmes.insert(DbTableFilmes.getContentValues(filmes));
+        filme = new Filmes();
+        filme.setTitle("Interstellar");
+        filme.setIdCategory(idCategorySciFi);
+        filme.setPoints(18);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
-        filmes = new Filmes();
-        filmes.setDate("11-07-2017");
-        filmes.setId(idClassificacaoMau);
-        filmes.setName("Liga da Justica");
-        dbTableFilmes.insert(DbTableFilmes.getContentValues(filmes));
+        filme = new Filmes();
+        filme.setTitle("Inception");
+        filme.setIdCategory(idCategoryDrama);
+        filme.setPoints(18);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
     }
 
     /**
