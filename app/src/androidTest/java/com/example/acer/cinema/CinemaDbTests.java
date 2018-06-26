@@ -108,7 +108,7 @@ public class CinemaDbTests {
 
         long idFilmes = insertFilmes(tableFilmes, filmes);
 
-        DbTableClassificacao tableClassificacao = new DbTableClassificacao(db);
+        DbTableCategories tableClassificacao = new DbTableCategories(db);
 
         // Insert/create (C)RUD
         Categorias classificacao = new Categorias();
@@ -117,7 +117,7 @@ public class CinemaDbTests {
         classificacao.setId((int) idFilmes);
 
         long id = tableClassificacao.insert(
-                DbTableClassificacao.getContentValues(classificacao)
+                DbTableCategories.getContentValues(classificacao)
         );
         assertNotEquals("Failed to insert classificacao", -1, id);
 
@@ -129,8 +129,8 @@ public class CinemaDbTests {
         classificacao.setId(3);
 
         int rowsAffected = tableClassificacao.update(
-                DbTableClassificacao.getContentValues(classificacao),
-                DbTableClassificacao._ID + "=?",
+                DbTableCategories.getContentValues(classificacao),
+                DbTableCategories._ID + "=?",
                 new String[]{Long.toString(id)}
         );
         assertEquals("Failed to update classificacao", 1, rowsAffected);
@@ -140,12 +140,12 @@ public class CinemaDbTests {
 
         // delete CRU(D)
         rowsAffected = tableClassificacao.delete(
-                DbTableClassificacao._ID + "=?",
+                DbTableCategories._ID + "=?",
                 new String[]{Long.toString(id)}
         );
         assertEquals("Failed to delete classificacao", 1, rowsAffected);
 
-        Cursor cursor = tableClassificacao.query(DbTableClassificacao.ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = tableClassificacao.query(DbTableCategories.ALL_COLUMNS, null, null, null, null, null);
         assertEquals("classificacao found after delete ???", 0, cursor.getCount());
     }
 
@@ -154,18 +154,18 @@ public class CinemaDbTests {
 
 
 
-    private Categorias ReadFirstClassificacao(DbTableClassificacao tableClassificacao,
+    private Categorias ReadFirstClassificacao(DbTableCategories tableClassificacao,
                                               String expectedType,
                                               long expectedFilmesId,
                                               long expectedId) {
 
-        Cursor cursor = tableClassificacao.query(DbTableClassificacao.ALL_COLUMNS, null,
+        Cursor cursor = tableClassificacao.query(DbTableCategories.ALL_COLUMNS, null,
                 null, null, null, null);
         assertEquals("Failed to read classificacao", 1, cursor.getCount());
 
         assertTrue("Failed to read the first classificacao", cursor.moveToNext());
 
-        Categorias classificacao = DbTableClassificacao.getCurrentClassificacaoFromCursor(cursor);
+        Categorias classificacao = DbTableCategories.getCurrentClassificacaoFromCursor(cursor);
 
         assertEquals("Incorrect classificacao name", expectedType, classificacao.getType());
         assertEquals("Incorrect classificacao id", expectedId, classificacao.getId(), 0.001);

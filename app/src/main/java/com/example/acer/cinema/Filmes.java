@@ -1,6 +1,5 @@
 package com.example.acer.cinema;
 
-import java.util.Date;
 
 public class Filmes {
 
@@ -25,11 +24,11 @@ public class Filmes {
         this.title = title;
     }
 
-    public double getPrice() {
+    public double getPoints() {
         return points;
     }
 
-    public void setPrice(double points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 

@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import java.text.BreakIterator;
 
 public class CinemaContentProvider extends ContentProvider {
 
@@ -64,13 +63,13 @@ public class CinemaContentProvider extends ContentProvider {
                                 return new DbTableFilmes(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
                         case CLASSIFICACAO:
-                                return new DbTableClassificacao(db).query(projection, selection, selectionArgs, null, null, sortOrder);
+                                return new DbTableCategories(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
                         case FILMES_ID:
                                 return new DbTableFilmes(db).query(projection, DbTableFilmes._ID + "=?", new String[] { id }, null, null, null);
 
                         case CLASSIFICACAO_ID:
-                                return new DbTableClassificacao(db).query(projection, DbTableClassificacao._ID + "=?", new String[] { id }, null, null, null);
+                                return new DbTableCategories(db).query(projection, DbTableCategories._ID + "=?", new String[] { id }, null, null, null);
 
                         default:
                                 throw new UnsupportedOperationException("Invalid URI: " + uri);
@@ -90,13 +89,13 @@ public class CinemaContentProvider extends ContentProvider {
                 return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + DbTableFilmes.TABLE_NAME;
 
             case CLASSIFICACAO:
-                return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + DbTableClassificacao.TABLE_NAME;
+                return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + DbTableCategories.TABLE_NAME;
 
             case FILMES_ID:
                 return SINGLE_ITEM + "/" + AUTHORITY + "/" + DbTableFilmes.TABLE_NAME;
 
             case CLASSIFICACAO_ID:
-                return SINGLE_ITEM + "/" + AUTHORITY + "/" + DbTableClassificacao.TABLE_NAME;
+                return SINGLE_ITEM + "/" + AUTHORITY + "/" + DbTableCategories.TABLE_NAME;
 
             default:
                 throw new UnsupportedOperationException("Unknown URI: " + uri);
@@ -118,7 +117,7 @@ public class CinemaContentProvider extends ContentProvider {
                                 id = new DbTableFilmes(db).insert(values);
                                 break;
                         case CLASSIFICACAO:
-                                id = new DbTableClassificacao(db).insert(values);
+                                id = new DbTableCategories(db).insert(values);
                                 break;
 
                         default:
@@ -156,7 +155,7 @@ public class CinemaContentProvider extends ContentProvider {
                                 break;
 
                         case CLASSIFICACAO_ID:
-                                rows = new DbTableClassificacao(db).delete(DbTableClassificacao._ID +"=?", new String [] { id });
+                                rows = new DbTableCategories(db).delete(DbTableCategories._ID +"=?", new String [] { id });
                                 break;
 
                         default:
@@ -184,7 +183,7 @@ public class CinemaContentProvider extends ContentProvider {
                 rows = new DbTableFilmes(db).update(values, DbTableFilmes._ID + "=?", new String[]{id});
                 break;
             case CLASSIFICACAO_ID:
-                rows = new DbTableClassificacao(db).update(values, DbTableClassificacao._ID + "=?", new String[]{id});
+                rows = new DbTableCategories(db).update(values, DbTableCategories._ID + "=?", new String[]{id});
                 break;
 
             default:

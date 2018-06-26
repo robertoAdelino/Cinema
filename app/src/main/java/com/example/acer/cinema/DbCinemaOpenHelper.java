@@ -32,7 +32,7 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        DbTableClassificacao dbTableClassificacao = new DbTableClassificacao(db);
+        DbTableCategories dbTableClassificacao = new DbTableCategories(db);
         dbTableClassificacao.create();
 
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
@@ -44,19 +44,19 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
     }
 
     private void seed(SQLiteDatabase db) {
-        DbTableClassificacao dbTableClassificacao = new DbTableClassificacao(db);
+        DbTableCategories dbTableClassificacao = new DbTableCategories(db);
 
         Categorias classificacao = new Categorias();
         classificacao.setType("Bom");
-        int idClassifcacaoBom = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
+        int idClassifcacaoBom = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
 
         classificacao = new Categorias();
         classificacao.setType("Muito Bom");
-        int idClassificacaoMuitoBom = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
+        int idClassificacaoMuitoBom = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
 
         classificacao = new Categorias();
         classificacao.setType("Mau");
-        int idClassificacaoMau = (int) dbTableClassificacao.insert(DbTableClassificacao.getContentValues(classificacao));
+        int idClassificacaoMau = (int) dbTableClassificacao.insert(DbTableCategories.getContentValues(classificacao));
 
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
 

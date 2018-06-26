@@ -5,19 +5,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import java.util.Date;
+public class DbTableCategories implements BaseColumns {
+    public static final String TABLE_NAME = "categories";
+    public static final String FIELD_NAME = "name";
 
-public class DbTableFilmes implements BaseColumns {
-    public static final String TABLE_NAME = "Filmes";
-    private static final String FIELD_TITLE = "title";
-    private static final String FIELD_POINTS = "points";
-    private static final String FIELD_ID_CATEGORY = "idCategory";
-
-    public static final String [] ALL_COLUMNS = new String[] { _ID, FIELD_TITLE, FIELD_POINTS, FIELD_ID_CATEGORY };
+    public static final String [] ALL_COLUMNS = new String[] { _ID, FIELD_NAME };
 
     private SQLiteDatabase db;
 
-    public DbTableFilmes(SQLiteDatabase db) {
+    public DbTableCategories(SQLiteDatabase db) {
         this.db = db;
     }
 
@@ -25,40 +21,29 @@ public class DbTableFilmes implements BaseColumns {
         db.execSQL(
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        FIELD_TITLE + " TEXT NOT NULL," +
-                        FIELD_POINTS + " REAL," +
-                        FIELD_ID_CATEGORY + " INTEGER," +
-                        "FOREIGN KEY (" + FIELD_ID_CATEGORY + ") REFERENCES " +
-                        DbTableCategories.TABLE_NAME +
-                        "(" + DbTableCategories._ID +")" +
+                        FIELD_NAME + " TEXT NOT NULL" +
                         ")"
         );
     }
 
-    public static ContentValues getContentValues(Filmes filme) {
+    public static ContentValues getContentValues(Categorias category) {
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_TITLE, filme.getTitle());
-        values.put(FIELD_POINTS, filme.getPoints());
-        values.put(FIELD_ID_CATEGORY, filme.getIdCategory());
+        values.put(FIELD_NAME, category.getName());
 
         return values;
     }
 
-    public static Filmes getCurrentBookFromCursor(Cursor cursor) {
+    public static Categorias getCurrentCategoryFromCursor(Cursor cursor) {
         final int posId = cursor.getColumnIndex(_ID);
-        final int posTitle = cursor.getColumnIndex(FIELD_TITLE);
-        final int posPoints = cursor.getColumnIndex(FIELD_POINTS);
-        final int posIdCategory = cursor.getColumnIndex(FIELD_ID_CATEGORY);
+        final int posName = cursor.getColumnIndex(FIELD_NAME);
 
-        Filmes filme = new Filmes();
+        Categorias category = new Categorias();
 
-        filme.setId(cursor.getInt(posId));
-        filme.setTitle(cursor.getString(posTitle));
-        filme.setPoints(cursor.getDouble(posPoints));
-        filme.setIdCategory(cursor.getInt(posIdCategory));
+        category.setId(cursor.getInt(posId));
+        category.setName(cursor.getString(posName));
 
-        return filme;
+        return category;
     }
 
     /**
@@ -133,7 +118,6 @@ public class DbTableFilmes implements BaseColumns {
      * @see Cursor
      */
     public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
-        return cursor;
+        return db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
 }
