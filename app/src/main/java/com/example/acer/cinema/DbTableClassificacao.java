@@ -30,7 +30,6 @@ public class DbTableClassificacao implements BaseColumns {
     public static ContentValues getContentValues(Classificacao classificacao) {
         ContentValues values = new ContentValues();
 
-        values.put(_ID, classificacao.getId());
         values.put(FIELD_TYPE, classificacao.getType());
 
         return values;
@@ -66,6 +65,6 @@ public class DbTableClassificacao implements BaseColumns {
     }
 
     public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
-    }
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, groupBy, having, orderBy);
+               return cursor;    }
 }

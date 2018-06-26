@@ -17,7 +17,7 @@ public class CinemaContentProvider extends ContentProvider {
 
 
     public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
-    public static final Uri BOOKS_URI = Uri.withAppendedPath(BASE_URI, DbTableFilmes.TABLE_NAME);
+    public static final Uri CINEMA_URI = Uri.withAppendedPath(BASE_URI, DbTableFilmes.TABLE_NAME);
 
 
     private static final int FILMES = 100;

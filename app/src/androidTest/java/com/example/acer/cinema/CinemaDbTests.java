@@ -55,7 +55,7 @@ public class CinemaDbTests {
         filmes.setName("Avatar");
         filmes.setClassificacao("Bom");
         filmes.setDate("11-11-11");
-        filmes.setId(1);
+ ;
 
         // Insert/create (C)RUD
         long id = insertFilmes(tableFilmes, filmes);
@@ -73,7 +73,7 @@ public class CinemaDbTests {
         assertEquals("Failed to update filme", 1, rowsAffected);
 
         // query/read C(R)UD
-        filmes = ReadFirstFilme(tableFilmes, "Avatar!", id,"Bom");
+        filmes = ReadFirstFilme(tableFilmes, "Avatar!",id,"Bom");
 
         // delete CRU(D)
         rowsAffected = tableFilmes.delete(

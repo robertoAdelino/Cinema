@@ -35,7 +35,6 @@ public class DbTableFilmes implements BaseColumns {
 
         ContentValues values = new ContentValues();
 
-        values.put(_ID, filmes.getId());
 
         values.put(FIELD_NAME, filmes.getName());
 

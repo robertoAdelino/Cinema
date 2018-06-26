@@ -1,27 +1,26 @@
 package com.example.acer.cinema;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-
+public class MainActivity extends AppCompatActivity  {
     private static final int CINEMA_CURSOR_LOADER_ID = 0;
-    private CinemaCursorAdapter cinemaCursorAdapter;
-    private RecyclerView recyclerViewCinema;
-
-
     private Button buttonVerFilmes;
     private Button buttonVerTodos;
+    private Spinner spinnerCategory;
+    private Filmes filmes;
+    private EditText editTextNomeFilme;
+    private EditText editTextRealizador;
+    private EditText editTextData;
+    private Spinner spinnerClassificacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,38 +46,53 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        setContentView(R.layout.activity_main);
 
-                RecyclerView recyclerViewCinema = (RecyclerView) findViewById(R.id.recyclerViewCinema);
+        Intent intent = getIntent();
 
-                        recyclerViewCinema.setLayoutManager(new LinearLayoutManager(this));
-                cinemaCursorAdapter = new CinemaCursorAdapter(this);
-                recyclerViewCinema.setAdapter(cinemaCursorAdapter);
+      /*  int filmeId = intent.getIntExtra(MainActivity.Cin, -1);
 
-                        getLoaderManager().initLoader(CINEMA_CURSOR_LOADER_ID, null,
-                                (android.app.LoaderManager.LoaderCallbacks<Cursor>) this);
+        if (filmeId == -1) {
+            finish();
+            return;
+        }
+
+        Cursor cursorFilmes = getContentResolver().query(
+                Uri.withAppendedPath(CinemaContentProvider.CINEMA_URI, Integer.toString(filmeId)),
+                DbTableFilmes.ALL_COLUMNS,
+                null,
+                null,
+                null
+        );
+
+        if (!cursorFilmes.moveToNext()) {
+            Toast.makeText(this, "Filme not found", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+*/
+        editTextNomeFilme = (EditText) findViewById(R.id.editTextNomeFilme);
+        editTextRealizador = (EditText) findViewById(R.id.editTextRealizador);
+        editTextData=(EditText) findViewById(R.id.editTextData);
+      //  spinnerClassificacao = (Spinner) findViewById(R.id.knsjn );
+
+      //  filmes = DbTableFilmes.getCurrentFilmesFromCursor(cursorFilmes);
+
+       // editTextRealizador.setText(filmes.get());
+        editTextNomeFilme.setText(filmes.getName());
+        editTextData.setText(String.format("%.2f",filmes.getDate()));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //getSupportLoaderManager().initLoader(CINEMA_CURSOR_LOADER_ID, null, this);
+
+
+
 
 
     }
 
 
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        if (id == CINEMA_CURSOR_LOADER_ID) {
-                        return new CursorLoader(this, CinemaContentProvider.BOOKS_URI,
-                                DbTableFilmes.ALL_COLUMNS, null, null, null);
-                    }
 
-                        return null;
-    }
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        cinemaCursorAdapter.refreshData(data);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        cinemaCursorAdapter.refreshData(null);
-    }
 }
