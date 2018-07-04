@@ -62,7 +62,7 @@ public class CinemaDbTests {
                 DbTableCategories._ID + "=?",
                 new String[]{Long.toString(id)}
         );
-        assertEquals("Failed to update category", 1, rowsAffected);
+        assertEquals("Failed to update category", 5, rowsAffected);
 
         // query/read C(R)UD
         category = ReadFirstCategory(tableCategories, "Sci-fi", id);
@@ -97,7 +97,7 @@ public class CinemaDbTests {
         Filmes filmes = new Filmes();
 
         filmes.setTitle("Interstelar");
-        filmes.setPoints(15);
+        filmes.setPoints(15.0);
         filmes.setIdCategory((int) idCategory);
 
         long id = tableFilmes.insert(
@@ -106,7 +106,7 @@ public class CinemaDbTests {
         assertNotEquals("Failed to insert Movie", -1, id);
 
         // query/read C(R)UD
-        filmes = ReadFirstFilme(tableFilmes, "Interstelar", 15, idCategory, id);
+        filmes = ReadFirstFilme(tableFilmes, "Interstelar", 15.0, idCategory, id);
 /////////
         ////////
         ///////
@@ -149,7 +149,7 @@ public class CinemaDbTests {
         Filmes filmes = DbTableFilmes.getCurrentFilmeFromCursor(cursor);
 
         assertEquals("Incorrect Movie title", expectedTitle, filmes.getTitle());
-        assertEquals("Incorrect Movie points", expectedPoints, filmes.getPoints(), 0.01);
+        assertEquals("Incorrect Movie points", expectedPoints, filmes.getPoints(), 00.01);
         assertEquals("Incorrect Movie category", expectedCategoryId, filmes.getIdCategory());
         assertEquals("Incorrect Movie id", expectedId, filmes.getId());
 

@@ -31,7 +31,7 @@ public class CinemaCursorAdapter extends RecyclerView.Adapter<CinemaCursorAdapte
         this.viewHolderClickListener = viewHolderClickListener;
     }
 
-    public int lastFilmeClicked() {
+    public int getlastFilmeClicked() {
         return lastFilmeClicked;
     }
 
@@ -105,7 +105,7 @@ public class CinemaCursorAdapter extends RecyclerView.Adapter<CinemaCursorAdapte
     public class CinemaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView textViewTitle;
         private TextView textViewPoints;
-        private int bookId;
+        private int filmeId;
 
         public CinemaViewHolder(View itemView) {
             super(itemView);
@@ -118,8 +118,8 @@ public class CinemaCursorAdapter extends RecyclerView.Adapter<CinemaCursorAdapte
 
         public void setFilme(Filmes filme) {
             textViewTitle.setText(filme.getTitle());
-            textViewPoints.setText(String.format("%.1f", filme.getPoints()) + "★");
-            bookId = filme.getId();
+            textViewPoints.setText(String.format("%.2f", filme.getPoints()) + "★");
+            filmeId = filme.getId();
         }
 
         /**
@@ -136,7 +136,7 @@ public class CinemaCursorAdapter extends RecyclerView.Adapter<CinemaCursorAdapte
             }
 
             if (viewHolderClickListener != null) {
-                lastFilmeClicked = bookId;
+                lastFilmeClicked = filmeId;
                 viewHolderClickListener.onClick(v);
             }
         }

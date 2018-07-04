@@ -5,10 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import java.util.Date;
 
 public class DbTableFilmes implements BaseColumns {
-    public static final String TABLE_NAME = "Filmes";
+    public static final String TABLE_NAME = "filmes";
     private static final String FIELD_TITLE = "title";
     private static final String FIELD_POINTS = "points";
     private static final String FIELD_ID_CATEGORY = "idCategory";

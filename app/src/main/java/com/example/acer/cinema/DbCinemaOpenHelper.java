@@ -62,19 +62,19 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
         Filmes filme = new Filmes();
         filme.setTitle("Interstelar");
         filme.setIdCategory(idCategorySciFi);
-        filme.setPoints(15);
+        filme.setPoints(15.30);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
         filme = new Filmes();
         filme.setTitle("Mr Bean");
         filme.setIdCategory(idCategoryComedy);
-        filme.setPoints(18);
+        filme.setPoints(18.40);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
 
         filme = new Filmes();
         filme.setTitle("Inception");
         filme.setIdCategory(idCategoryDrama);
-        filme.setPoints(18);
+        filme.setPoints(18.50);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
     }
 

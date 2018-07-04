@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 
 public class CinemaContentProvider extends ContentProvider {
 
+
     private static final String AUTHORITY = "com.example.acer.cinema";
 
     public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
@@ -153,10 +154,12 @@ public class CinemaContentProvider extends ContentProvider {
                 return new DbTableCategories(db).query(projection, selection, selectionArgs, null, null, sortOrder);
 
             case FILMES_ID:
-                return new DbTableFilmes(db).query(projection, DbTableFilmes._ID + "=?", new String[] { id }, null, null, null);
+                return new DbTableFilmes(db).query(projection, DbTableFilmes._ID + "=?", new String[] {
+                        id }, null, null, null);
 
             case CATEGORIES_ID:
-                return new DbTableCategories(db).query(projection, DbTableCategories._ID + "=?", new String[] { id }, null, null, null);
+                return new DbTableCategories(db).query(projection, DbTableCategories._ID + "=?", new String[] {
+                        id }, null, null, null);
 
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);

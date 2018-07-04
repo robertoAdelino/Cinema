@@ -1,91 +1,109 @@
 package com.example.acer.cinema;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int CINEMA_CURSOR_LOADER_ID = 0;
-    public static final String CINEMA_ID = "CINEMA_ID";
+public class EditMovieActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private CinemaCursorAdapter filmesCursorAdapter;
-    private RecyclerView recyclerViewFilmes;
+    private static final int CATEGORIES_CURSOR_LOADER_ID = 0;
+
+    private EditText editTextTitle;
+    private EditText editTextPoints;
+    private Spinner spinnerCategory;
+    private Filmes filmes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_edit_movie);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        recyclerViewFilmes = (RecyclerView) findViewById(R.id.recyclerViewFilmes);
+        Intent intent = getIntent();
 
-        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(this));
-        filmesCursorAdapter = new CinemaCursorAdapter(this);
-        recyclerViewFilmes.setAdapter(filmesCursorAdapter);
+        int cinemaId = intent.getIntExtra(MainActivity.CINEMA_ID, -1);
 
-        filmesCursorAdapter.setViewHolderClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editFilme();
-            }
-        });
+        if (cinemaId == -1) {
+            finish();
+            return;
+        }
 
-        getSupportLoaderManager().initLoader(CINEMA_CURSOR_LOADER_ID, null, this);
-    }
+        Cursor cursorCinema = getContentResolver().query(
+                Uri.withAppendedPath(CinemaContentProvider.FILMES_URI, Integer.toString(cinemaId)),
+                DbTableFilmes.ALL_COLUMNS,
+                null,
+                null,
+                null
+        );
 
-    private void editFilme() {
-        int id = filmesCursorAdapter.getlastFilmeClicked();
+        if (!cursorCinema.moveToNext()) {
+            Toast.makeText(this, "Movie not found", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
-        Intent intent = new Intent(this, EditMovieActivity.class);
+        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+        editTextPoints = (EditText) findViewById(R.id.editTextPoints);
+        spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
 
-        intent.putExtra(CINEMA_ID, id);
+        filmes = DbTableFilmes.getCurrentFilmeFromCursor(cursorCinema);
 
-        startActivity(intent);
+        editTextTitle.setText(filmes.getTitle());
+        editTextPoints.setText(String.format("%.2f",filmes.getPoints()));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportLoaderManager().initLoader(CATEGORIES_CURSOR_LOADER_ID, null, this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportLoaderManager().restartLoader(CINEMA_CURSOR_LOADER_ID, null, this);
+        getSupportLoaderManager().restartLoader(CATEGORIES_CURSOR_LOADER_ID, null, this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void cancel(View view) {
+        finish();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void save(View view) {
+        // todo: validations
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        filmes.setTitle(editTextTitle.getText().toString());
+        filmes.setPoints(Double.parseDouble(editTextPoints.getText().toString()));
+        filmes.setIdCategory((int) spinnerCategory.getSelectedItemId());
+
+        int recordsAffected = getContentResolver().update(
+                Uri.withAppendedPath(CinemaContentProvider.FILMES_URI, Integer.toString(filmes.getId())),
+                DbTableFilmes.getContentValues(filmes),
+                null,
+                null
+        );
+
+        if (recordsAffected > 0) {
+            Toast.makeText(this, "Movie saved successfully", Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
 
-        return super.onOptionsItemSelected(item);
+        Toast.makeText(this, "Could not save Movie", Toast.LENGTH_LONG).show();
     }
-
-
 
     /**
      * Instantiate and return a new Loader for the given ID.
@@ -97,11 +115,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @return Return a new Loader instance that is ready to start loading.
      */
     @NonNull
-    //@Override
+    @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        if (id == CINEMA_CURSOR_LOADER_ID) {
-            return new CursorLoader(this, CinemaContentProvider.FILMES_URI, DbTableFilmes.ALL_COLUMNS,
-                    null, null, null);
+        if (id == CATEGORIES_CURSOR_LOADER_ID) {
+            return new CursorLoader(this, CinemaContentProvider.CATEGORIES_URI, DbTableCategories.ALL_COLUMNS, null, null, null);
         }
 
         return null;
@@ -111,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * Called when a previously created loader has finished its load.  Note
      * that normally an application is <em>not</em> allowed to commit fragment
      * transactions while in this call, since it can happen after an
-     * activity's state is saved.  See {@link //FragmentManager#beginTransaction()
+     * activity's state is saved.  See {@link FragmentManager#beginTransaction()
      * FragmentManager.openTransaction()} for further discussion on this.
      * <p>
      * <p>This function is guaranteed to be called prior to the release of
@@ -126,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * them to you through new calls here.  You should not monitor the
      * data yourself.  For example, if the data is a {@link Cursor}
      * and you place it in a {@link CursorAdapter}, use
-     * the {@link CursorAdapter#//CursorAdapter(Context, * Cursor, int)} constructor <em>without</em> passing
+     * the {@link CursorAdapter#CursorAdapter(Context, * Cursor, int)} constructor <em>without</em> passing
      * in either {@link CursorAdapter#FLAG_AUTO_REQUERY}
      * or {@link CursorAdapter#FLAG_REGISTER_CONTENT_OBSERVER}
      * (that is, use 0 for the flags argument).  This prevents the CursorAdapter
@@ -149,7 +166,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        filmesCursorAdapter.refreshData(data);
+        SimpleCursorAdapter cursorAdapterCategories = new SimpleCursorAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                data,
+                new String[]{DbTableCategories.FIELD_NAME},
+                new int[]{android.R.id.text1}
+        );
+
+        spinnerCategory.setAdapter(cursorAdapterCategories);
+
+        int idCategory = filmes.getIdCategory();
+
+        for (int i = 0; i < spinnerCategory.getCount(); i++) {
+            Cursor cursor = (Cursor) spinnerCategory.getItemAtPosition(i);
+
+            final int posId = cursor.getColumnIndex(DbTableCategories._ID);
+
+            if (idCategory == cursor.getInt(posId)) {
+                spinnerCategory.setSelection(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -163,9 +201,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        filmesCursorAdapter.refreshData(null);
-    }
 
     }
-
-
+}

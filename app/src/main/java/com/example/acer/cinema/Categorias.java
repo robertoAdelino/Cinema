@@ -1,6 +1,5 @@
 package com.example.acer.cinema;
 
-import android.database.Cursor;
 
 public class Categorias {
     private int id;
