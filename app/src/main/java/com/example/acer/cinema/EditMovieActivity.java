@@ -104,6 +104,16 @@ public class EditMovieActivity extends AppCompatActivity implements LoaderManage
 
         Toast.makeText(this, "Could not save Movie", Toast.LENGTH_LONG).show();
     }
+/*
+    void delete(){
+
+        String where = DbTableFilmes._ID+" = "+filmes.getId();
+        int i = filmes.delete(CinemaContentProvider.FILMES_URI,where,null);
+        if(i>0){
+            Toast.makeText(this,filmes.getTitle()+ " deleted from DB "+i,Toast.LENGTH_LONG).show();
+
+        }
+*/
 
     /**
      * Instantiate and return a new Loader for the given ID.

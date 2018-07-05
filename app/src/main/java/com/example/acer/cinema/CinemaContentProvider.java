@@ -348,4 +348,7 @@ public class CinemaContentProvider extends ContentProvider {
 
         return rows;
     }
+
+
+
 }

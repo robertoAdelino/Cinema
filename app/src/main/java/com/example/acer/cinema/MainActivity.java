@@ -15,12 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int CINEMA_CURSOR_LOADER_ID = 0;
     public static final String CINEMA_ID = "CINEMA_ID";
-
+    private Button buttonAdd;
     private CinemaCursorAdapter filmesCursorAdapter;
     private RecyclerView recyclerViewFilmes;
 
@@ -45,7 +46,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
         getSupportLoaderManager().initLoader(CINEMA_CURSOR_LOADER_ID, null, this);
+
+
+
+/*
+        buttonAdd = (Button) findViewById(R.id.buttonAdd);
+         buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abriraddmovie();
+                            }
+        });
+
+*/
+
     }
+
+   /* public void abriraddmovie() {
+        Intent intent = new Intent(this, AddFilme.class);
+        startActivity(intent);
+    }*/
+
 
     private void editFilme() {
         int id = filmesCursorAdapter.getlastFilmeClicked();

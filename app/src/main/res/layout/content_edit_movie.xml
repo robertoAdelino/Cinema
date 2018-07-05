@@ -65,7 +65,7 @@
             android:id="@+id/editTextPoints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Points"
+            android:hint="Points[0-20]"
             android:inputType="numberDecimal" />
     </android.support.design.widget.TextInputLayout>
 
