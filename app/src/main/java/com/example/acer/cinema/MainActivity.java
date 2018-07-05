@@ -49,23 +49,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
 
-/*
+
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
          buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abriraddmovie();
+                abrirAddmovie();
                             }
         });
 
-*/
+
 
     }
 
-   /* public void abriraddmovie() {
+    public void abrirAddmovie() {
         Intent intent = new Intent(this, AddFilme.class);
         startActivity(intent);
-    }*/
+    }
 
 
     private void editFilme() {

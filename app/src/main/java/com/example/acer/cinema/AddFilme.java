@@ -27,7 +27,7 @@ public class AddFilme extends AppCompatActivity implements LoaderManager.LoaderC
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_movie);
+        setContentView(R.layout.add_filme_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
