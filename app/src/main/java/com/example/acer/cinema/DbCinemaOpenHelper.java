@@ -56,9 +56,29 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
         int idCategoryDrama = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
         category = new Categorias();
-        category.setName("Comedy");
+        category.setName("Comédia");
         dbTableCategories.insert(DbTableCategories.getContentValues(category));
         int idCategoryComedy = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
+
+        category = new Categorias();
+        category.setName("Animação");
+        dbTableCategories.insert(DbTableCategories.getContentValues(category));
+        int idCategoryAnimacao = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
+
+        category = new Categorias();
+        category.setName("Ação");
+        dbTableCategories.insert(DbTableCategories.getContentValues(category));
+        int idCategoryAcao = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
+
+        category = new Categorias();
+        category.setName("Terror");
+        dbTableCategories.insert(DbTableCategories.getContentValues(category));
+        int idCategoryTerror = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
+
+        category = new Categorias();
+        category.setName("Documentário");
+        dbTableCategories.insert(DbTableCategories.getContentValues(category));
+        int idCategoryDocumentario = (int) dbTableCategories.insert(DbTableCategories.getContentValues(category));
 
         DbTableFilmes dbTableFilmes = new DbTableFilmes(db);
 
@@ -67,6 +87,34 @@ public class DbCinemaOpenHelper extends SQLiteOpenHelper {
         filme.setIdCategory(idCategorySciFi);
         filme.setPoints(15.30);
         dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
+
+        filme = new Filmes();
+        filme.setTitle("John Wick");
+        filme.setIdCategory(idCategoryAcao);
+        filme.setPoints(18.20);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
+
+
+
+        filme = new Filmes();
+        filme.setTitle("Trump");
+        filme.setIdCategory(idCategoryDocumentario);
+        filme.setPoints(18.20);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
+
+
+        filme = new Filmes();
+        filme.setTitle("Nemo");
+        filme.setIdCategory(idCategoryAnimacao);
+        filme.setPoints(18.20);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
+
+        filme = new Filmes();
+        filme.setTitle("IT");
+        filme.setIdCategory(idCategoryTerror);
+        filme.setPoints(15);
+        dbTableFilmes.insert(DbTableFilmes.getContentValues(filme));
+
 
         filme = new Filmes();
         filme.setTitle("Mr Bean");
